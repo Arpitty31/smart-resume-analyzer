@@ -6,36 +6,49 @@ client = Groq(api_key=os.environ.get("gsk_yygMr6dmiqJzgOcxYyJBWGdyb3FYgoHrYAZhzK
 
 def analyze_resume(resume_text: str, job_role: str = "Software Engineer") -> dict:
     prompt = f"""
-You are an expert resume analyzer and career coach.
+You are a strict and detailed resume analyzer. Analyze this SPECIFIC resume carefully.
 
-Analyze the following resume for a {job_role} position and provide:
+Job Role: {job_role}
 
-1. ATS Score (out of 100)
-2. Strengths - What's good (3-5 points)
-3. Weaknesses - What's missing (3-5 points)
-4. Skills Gap - Important skills missing for {job_role}
-5. Suggestions - Specific actionable improvements (3-5 points)
-6. Overall Grade - A/B/C/D with reason
-
-Resume:
+Resume Content:
 {resume_text}
 
-Respond in this EXACT JSON format only, no extra text, no markdown backticks:
+Based on the ACTUAL content of this resume above, provide a detailed analysis.
+Be specific - mention actual skills, projects, and experiences from the resume.
+Do NOT give generic advice. Every point must reference something specific from this resume.
+
+Return ONLY this JSON (no markdown, no extra text):
 {{
-    "ats_score": 75,
-    "grade": "B",
-    "strengths": ["point1", "point2", "point3"],
-    "weaknesses": ["point1", "point2", "point3"],
-    "skills_gap": ["skill1", "skill2", "skill3"],
-    "suggestions": ["point1", "point2", "point3"],
-    "summary": "One line overall summary"
+    "ats_score": <calculate based on actual resume content>,
+    "grade": "<A/B/C/D based on actual quality>",
+    "strengths": [
+        "<specific strength from THIS resume>",
+        "<specific strength from THIS resume>",
+        "<specific strength from THIS resume>"
+    ],
+    "weaknesses": [
+        "<specific weakness found in THIS resume>",
+        "<specific weakness found in THIS resume>",
+        "<specific weakness found in THIS resume>"
+    ],
+    "skills_gap": [
+        "<skill missing for {job_role} not found in resume>",
+        "<skill missing for {job_role} not found in resume>",
+        "<skill missing for {job_role} not found in resume>"
+    ],
+    "suggestions": [
+        "<specific actionable suggestion for THIS resume>",
+        "<specific actionable suggestion for THIS resume>",
+        "<specific actionable suggestion for THIS resume>"
+    ],
+    "summary": "<one line summary mentioning candidate's name or specific details from resume>"
 }}
 """
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.3,
+        temperature=0.7,
     )
 
     text = response.choices[0].message.content.strip()
