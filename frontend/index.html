@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Resume Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <h1>🧠 Smart Resume Analyzer</h1>
+        <button id="themeToggle" class="theme-btn">🌙 Dark</button>
+      </div>
+      <p>Upload your resume and get AI-powered feedback instantly</p>
+    </header>
+
+    <div class="upload-section">
+      <div class="drop-zone" id="dropZone">
+        <span>📄 Drag & Drop your PDF here</span>
+        <span>or</span>
+        <label for="fileInput" class="browse-btn">Browse File</label>
+        <input type="file" id="fileInput" accept=".pdf" hidden />
+      </div>
+      <p id="fileName" class="file-name"></p>
+
+      <div class="role-input">
+        <label>Target Job Role:</label>
+        <input type="text" id="jobRole" placeholder="e.g. Software Engineer, Data Analyst" value="Software Engineer"/>
+      </div>
+
+      <button id="analyzeBtn" class="analyze-btn" disabled>Analyze Resume</button>
+    </div>
+
+    <div id="loader" class="loader hidden">
+      <div class="spinner"></div>
+      <p>Analyzing your resume with AI...</p>
+    </div>
+
+    <div id="results" class="results hidden">
+      <div class="score-card">
+        <div class="circle-wrap">
+          <svg viewBox="0 0 120 120" class="circle-svg">
+            <circle cx="60" cy="60" r="52" class="circle-bg"/>
+            <circle cx="60" cy="60" r="52" class="circle-fill" id="circleBar"/>
+          </svg>
+          <div class="circle-text">
+            <span id="atsScore">0</span>
+            <label>ATS Score</label>
+          </div>
+        </div>
+        <div class="grade-badge">
+          <span id="grade">-</span>
+          <label>Grade</label>
+        </div>
+      </div>
+
+      <p id="summary" class="summary"></p>
+
+      <div class="cards-grid">
+        <div class="card strengths">
+          <h3>✅ Strengths</h3>
+          <ul id="strengthsList"></ul>
+        </div>
+        <div class="card weaknesses">
+          <h3>❌ Weaknesses</h3>
+          <ul id="weaknessesList"></ul>
+        </div>
+        <div class="card skills-gap">
+          <h3>📌 Skills Gap</h3>
+          <ul id="skillsGapList"></ul>
+        </div>
+        <div class="card suggestions">
+          <h3>💡 Suggestions</h3>
+          <ul id="suggestionsList"></ul>
+        </div>
+      </div>
+
+      <button id="downloadBtn" class="download-btn">📥 Download PDF Report</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
