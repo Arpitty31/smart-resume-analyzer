@@ -3,7 +3,7 @@ import json
 import os
 
 client = Groq(api_key=os.environ.get("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"))
-client = Groq(api_key=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)
+client = Groq(api_key="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")
 
 def analyze_resume(resume_text: str, job_role: str = "Software Engineer") -> dict:
     prompt = f"""
